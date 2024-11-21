@@ -1,0 +1,12 @@
+version: '3'
+services:
+  points_collection_service:
+    build: 
+      dockerfile: "Dockerfile"
+    volumes:
+      - './user_data:/points_collection/user_data'
+    command: python -m points_collection
+    stdin_open: true
+    tty: true
+    ipc: host
+

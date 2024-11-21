@@ -1,0 +1,18 @@
+message:
+  channel: telegram
+  ntfy:
+    server: ""
+    topic: ""
+  telegram:
+    token: ""
+    chat_id: ""
+
+debug: true
+headless: true
+execution_interval: 5000
+devices: "Desktop Edge"
+search_times: 31
+
+microsoft:
+  user: ""
+  password: ""

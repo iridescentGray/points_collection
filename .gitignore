@@ -1,0 +1,25 @@
+# Distribution / packaging
+.Python
+./build/*
+dist/
+
+# Environments
+.env
+
+# mkdocs documentation
+/site
+
+.idea
+/.vscode
+
+.DS_Store
+__pycache__
+
+*.log
+db
+poetry.lock
+
+
+state.json
+config.yaml
+
