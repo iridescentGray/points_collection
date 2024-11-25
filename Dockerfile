@@ -1,6 +1,7 @@
 FROM python:3.11.9-slim-bookworm as base
 ENV LANG C.UTF-8
 ENV LC_ALL C.UTF-8
+ENV TZ=Asia/Shanghai
 
 RUN mkdir /points_collection
 
