@@ -36,12 +36,8 @@ async def do_search() -> None:
             await search_task.pc_search(word)
             await search_wait(i)
         except Exception as e:
-            await message_sender.send_message("error happened do search")
+            await message_sender.send_message("error happened in do search")
             logger.exception(e)
-
-    await message_sender.send_message(
-        "search success, see https://rewards.bing.com/redeem/"
-    )
 
 
 async def search_wait(search_times):

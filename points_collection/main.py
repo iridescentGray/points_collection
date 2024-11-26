@@ -12,11 +12,14 @@ is_debug = config_manager.config.get("debug", False)
 
 async def core_job_inner():
     try:
-        logger.info(
+        await message_sender.send_message(
             "points collection start!",
         )
         await auth.ensure_login()
         await search_worker.do_search()
+        await message_sender.send_message(
+            "search success, see https://rewards.bing.com/redeem/"
+        )
     except Exception as e:
         await message_sender.send_message("error happened,please see logs")
         logger.exception(e)
