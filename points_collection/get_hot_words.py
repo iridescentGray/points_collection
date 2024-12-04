@@ -58,6 +58,6 @@ def get_explore_words() -> list[str]:
         )
         raise RuntimeError("get explore words from remote error")
     # 打乱顺序
-    explore_words.extend(poetry_list)
+    # explore_words.extend(poetry_list)
     random.shuffle(explore_words)
     return explore_words
