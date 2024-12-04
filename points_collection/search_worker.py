@@ -25,7 +25,7 @@ async def get_current_points(
 
 
 async def do_search() -> None:
-    expolore_words = hot_words.get_explore_words()
+    expolore_words = hot_words.get_explore_words(search_times)
     logger.info(
         f"do_search,expolore_words:{expolore_words}",
     )

@@ -40,12 +40,15 @@ poetry_list = [
 ]
 
 
-def get_explore_words() -> list[str]:
-    key_words_sources = ["BaiduHot", "TouTiaoHot", "DouYinHot", "WeiBoHot"]
+def get_search_word_from_remote(key_word) -> list[str]:
+    """获取
+
+    Returns:
+        tuple[int, list[str]]: _description_
+    """
+
     explore_words = []
-    response = httpx.get(
-        f"https://api.gumengya.com/Api/{random.choice(key_words_sources)}"
-    ).json()
+    response = httpx.get(f"https://api.gumengya.com/Api/{key_word}").json()
     if response.get("code") == 200:
         for item in response.get("data", {}):
             explore_words.append(item["title"])
@@ -57,7 +60,20 @@ def get_explore_words() -> list[str]:
             asyncio.get_running_loop(),
         )
         raise RuntimeError("get explore words from remote error")
-    # 打乱顺序
-    # explore_words.extend(poetry_list)
+    return explore_words
+
+
+def get_explore_words(need_words: int) -> list[str]:
+    explore_words = []
+    key_words_sources = ["BaiduHot", "TouTiaoHot", "DouYinHot", "WeiBoHot"]
+    for _ in range(5):
+        random_word = random.choice(key_words_sources)
+        remote_words = get_search_word_from_remote(random_word)
+        explore_words.extend(remote_words)
+        key_words_sources.remove(random_word)
+
+        if need_words < len(explore_words):
+            break
+
     random.shuffle(explore_words)
     return explore_words
