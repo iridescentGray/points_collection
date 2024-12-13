@@ -8,10 +8,10 @@ message:
     chat_id: ""
 
 debug: true
-headless: true
+headless: false
 execution_interval: 5000
 devices: "Desktop Edge"
-search_times: 31
+search_times: 15
 
 microsoft:
   user: ""

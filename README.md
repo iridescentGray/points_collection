@@ -1,21 +1,32 @@
 # points_collection
 
-    此项目用于白嫖微软bing搜索积分
+    此项目用于白嫖微软bing搜索积分,特性如下:
+    1.配置账号密码后，会自动登录微软账号
+    2.每天12.30 开始定时执行搜索任务
+    3.支持docker 无头运行
 
-## config
+## 创建 config
 
-    # 拷贝并完善配置,填充用户名、密码，通知渠道
+    # 拷贝样例配置
     cp user_data/config-simple.yaml user_data/config.yaml
+    # 填充用户名、密码，通知渠道
 
 ### config 解释
 
-    message          执行结果通知渠道
-    debug: True      debug模式下,流程会直接执行，不会定时执行
-    headless: True   无头执行 (未解之谜: 无头执行时，无法自动登录)、
+    message             通知渠道
+    debug: True         debug=True时,搜索流程会直接执行，debug=False时,搜索流程会在每天12.30定时执行
+    headless: True      无头执行 (未解之谜: 无头执行时，无法自动登录)
     execution_interval  执行间隔，避免执行太快，单位是毫秒
-    search_times     搜索执行次数
+    search_times        搜索执行次数
+    microsoft           输入账号密码，自动登录
 
 ## start-up
+
+### by pip
+
+    pip install -r requirements.txt
+    playwright install --force chromium
+    python -m points_collection
 
 ### by poetry
 
@@ -26,7 +37,7 @@
 
 ### by docker-compose
 
-    # 无头执行，需要提前准备好登陆状态文件 state.json (在有头时跑一遍就行)
+    # 必须无头执行(设置headless: True)，需要提前在headless: False时，跑一遍自动登录流程,准备好登录态
     docker-compose up -d
 
 ## 待解决问题
