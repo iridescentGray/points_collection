@@ -10,8 +10,13 @@ message:
 debug: true
 headless: false
 execution_interval: 5000
-devices: "Desktop Edge"
-search_times: 15
+
+#
+pc_devices: "Desktop Edge"
+pc_search_times: 33
+
+phone_devices: "iPhone 15"
+phone_search_times: 23
 
 microsoft:
   user: ""

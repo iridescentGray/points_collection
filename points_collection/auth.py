@@ -10,7 +10,7 @@ from points_collection.yaml_config import config_manager
 microsoft_user = config_manager.config.get("microsoft", {}).get("user", "")
 password = config_manager.config.get("microsoft", {}).get("password", "")
 is_headless = config_manager.config.get("headless", True)
-devices = yaml_config.config_manager.config.get("devices", "Desktop Edge")
+pc_devices = yaml_config.config_manager.config.get("pc_devices", "Desktop Edge")
 
 
 async def is_login(browser_context: typing.Optional[BrowserContext] = None) -> bool:
@@ -62,7 +62,7 @@ async def login_and_save_status(
 @playwrights.with_async_context(
     context_file_path="./user_data/state.json",
     headless=is_headless,
-    target_devices=devices,
+    target_devices=pc_devices,
 )
 async def ensure_login(browser_context: typing.Optional[BrowserContext] = None) -> bool:
     if is_headless == True:

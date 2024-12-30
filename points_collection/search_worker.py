@@ -12,7 +12,8 @@ from points_collection import message_sender
 from points_collection.logger import logger
 
 is_headless = yaml_config.config_manager.config.get("headless", True)
-search_times = yaml_config.config_manager.config.get("search_times", 15)
+pc_search_times = yaml_config.config_manager.config.get("pc_search_times", 15)
+phone_search_times = yaml_config.config_manager.config.get("phone_search_times", 15)
 
 
 @playwrights.with_async_context(
@@ -25,18 +26,27 @@ async def get_current_points(
 
 
 async def do_search() -> None:
-    expolore_words = hot_words.get_explore_words(search_times)
+    expolore_words = hot_words.get_explore_words(pc_search_times + phone_search_times)
     logger.info(
         f"do_search,expolore_words:{expolore_words}",
     )
 
-    for i in range(1, search_times):
+    for i in range(1, phone_search_times):
+        try:
+            word = expolore_words[i]
+            await search_task.phone_search(word)
+            await search_wait(i)
+        except Exception as e:
+            await message_sender.send_message("error happened in do phone search")
+            logger.exception(e)
+
+    for i in range(1, pc_search_times):
         try:
             word = expolore_words[i]
             await search_task.pc_search(word)
             await search_wait(i)
         except Exception as e:
-            await message_sender.send_message("error happened in do search")
+            await message_sender.send_message("error happened in do pc search")
             logger.exception(e)
 
 

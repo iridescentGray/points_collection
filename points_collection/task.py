@@ -12,16 +12,31 @@ from points_collection.logger import logger
 execution_interval = yaml_config.config_manager.config.get("execution_interval", 2000)
 is_headless = yaml_config.config_manager.config.get("headless", True)
 # see https://github.com/microsoft/playwright/blob/main/packages/playwright-core/src/server/deviceDescriptorsSource.json
-devices = yaml_config.config_manager.config.get("devices", "Desktop Chrome")
+pc_devices = yaml_config.config_manager.config.get("pc_devices", "Desktop Chrome")
+phone_devices = yaml_config.config_manager.config.get("phone_devices", "iPhone 15")
 
 
 @playwrights.with_async_context(
     context_file_path="./user_data/state.json",
     headless=is_headless,
     slow_mo=execution_interval,
-    target_devices=devices,
+    target_devices=pc_devices,
 )
 async def pc_search(
+    search_word: str,
+    *,
+    browser_context: typing.Optional[BrowserContext] = None,
+) -> None:
+    await _execute_search(search_word, browser_context)
+
+
+@playwrights.with_async_context(
+    context_file_path="./user_data/state.json",
+    headless=is_headless,
+    slow_mo=execution_interval,
+    target_devices=phone_devices,
+)
+async def phone_search(
     search_word: str,
     *,
     browser_context: typing.Optional[BrowserContext] = None,
