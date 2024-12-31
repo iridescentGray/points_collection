@@ -27,7 +27,9 @@ async def pc_search(
     *,
     browser_context: typing.Optional[BrowserContext] = None,
 ) -> None:
+    logger.info(f"start to pc search:{search_word}")
     await _execute_search(search_word, browser_context)
+    logger.info(f"end pc search:{search_word}")
 
 
 @playwrights.with_async_context(
@@ -41,14 +43,15 @@ async def phone_search(
     *,
     browser_context: typing.Optional[BrowserContext] = None,
 ) -> None:
+    logger.info(f"start to phone search:{search_word}")
     await _execute_search(search_word, browser_context)
+    logger.info(f"end phone search:{search_word}")
 
 
 async def _execute_search(
     search_word: str,
     browser_context: typing.Optional[BrowserContext] = None,
 ):
-    logger.info(f"start to search:{search_word}")
     page = await browser_context.new_page()  # type: ignore
     await page.goto(
         f"https://www.bing.com/search?q={search_word}&form={generate_random_string(4)}&cvid={generate_random_string(32)}"
@@ -57,7 +60,6 @@ async def _execute_search(
     await page.reload()
     await smooth_scroll_to_bottom(page)
     await asyncio.sleep(2)
-    logger.info(f"end search:{search_word}")
 
 
 def generate_random_string(length):
